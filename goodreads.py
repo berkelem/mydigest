@@ -18,7 +18,7 @@ class WebLoader:
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--incognito')
         options.add_argument('--headless')
-        browser = webdriver.Chrome("/Users/Laptop-23950/PycharmProjects/chromedriver", options=options)
+        browser = webdriver.Chrome(options=options)
         return browser
 
     @staticmethod
@@ -73,6 +73,12 @@ class Goodreads(WebLoader):
         book_reviews = results.find_all('tr', class_='bookalike review')
         return book_reviews
 
+    def get_book_url(self, job_elem):
+        links = job_elem.findChildren("td", class_="field title", recursive=False)
+        book_url = links[0].findChildren("a", href=True)[0]["href"]
+        full_book_url = "https://www.goodreads.com{}".format(book_url)
+        return full_book_url
+
     def get_reviews(self):
         book_reviews = self.find_reviews_in_html()
         num_reviews = len(book_reviews)
@@ -80,9 +86,6 @@ class Goodreads(WebLoader):
         reviews = []
         for i in rand_ints:
             job_elem = book_reviews[i]
-            links = job_elem.findChildren("td", class_="field title", recursive=False)
-            book_url = links[0].findChildren("a", href=True)[0]["href"]
-            full_book_url = "https://www.goodreads.com{}".format(book_url)
             title, review = self.extract_review(job_elem)
             while review == "None":
                 j = np.random.randint(0, len(book_reviews))
@@ -90,8 +93,8 @@ class Goodreads(WebLoader):
                     continue
                 job_elem = book_reviews[j]
                 title, review = self.extract_review(job_elem)
+            full_book_url = self.get_book_url(job_elem)
             clean_title = title.text.split("\n")[1].strip()
-
             reviews.append((clean_title, review, full_book_url))
         return reviews
 

@@ -10,7 +10,7 @@ class DigestEmail:
         self.port = 465  # For SSL
         self.smtp_server = "smtp.gmail.com"
         self.sender_email = "mydigestbot@gmail.com"
-        self.receiver_email = "berkelem@tcd.ie"
+        self.receiver_email = "matthew.berkeley@unige.ch"
         self.yag = yagmail.SMTP(self.sender_email)
 
     def create_message(self, plaintext, htmltext):
