@@ -108,18 +108,7 @@ class Goodreads(WebLoader):
 
     def create_html_message(self, review_tuple):
         title, review, url = review_tuple
-        html = """\
-            <html>
-              <body>
-                <p><a href="{}">{}</a><br><br>
-                   Review: {}<br>       
-                </p>
-              </body>
-            </html>
-            """.format(url, title, review)
+        html = """<p><a href="{}">{}</a><br><br>
+                     Review: {}<br>       
+                  </p> """.format(url, title, review)
         return html
-
-
-if __name__ == "__main__":
-    gdr_reader = Goodreads(1)
-    gdr_reader.get_reviews()

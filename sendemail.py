@@ -10,7 +10,7 @@ class DigestEmail:
         self.port = 465  # For SSL
         self.smtp_server = "smtp.gmail.com"
         self.sender_email = "mydigestbot@gmail.com"
-        self.receiver_email = "matthew.berkeley@unige.ch"
+        self.receiver_email = "berkelem@tcd.ie"
         self.yag = yagmail.SMTP(self.sender_email)
 
     def create_message(self, plaintext, htmltext):
@@ -29,6 +29,18 @@ class DigestEmail:
         message.attach(part1)
         message.attach(part2)
         return message
+
+    def compile_html_text(self, html_elements):
+        html = """<html>
+                    <head>
+                      <link rel="stylesheet" href="tweetstyle.css">
+                    </head>
+                    <body>
+                      {}
+                    </body>
+                  </html>
+                  """.format(html_elements)
+        return html
 
     def send_email(self, message):
         password = input("Type your password and press enter: ")
