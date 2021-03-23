@@ -1,6 +1,5 @@
 import tweepy
 import os
-import sendemail
 import urllib.request
 import json
 import random
@@ -30,16 +29,22 @@ class TwitterCrawler:
         return api
 
     @staticmethod
-    def create_html_message(msg_html):
+    def create_html_message(title, msg_html):
         html = """<p>
-                    Liked Tweets
+                    <h1>
+                      {}
+                    </h1>
                   </p>
-                  {}""".format(msg_html)
+                  {}""".format(title, msg_html)
         return html
 
     def load_likes(self):
         likes = tweepy.Cursor(self.api.favorites, id=self.username).items()
         return likes
+
+    def load_tweets(self):
+        tweets = tweepy.Cursor(self.api.user_timeline).items()
+        return tweets
 
     def extract_tweet_ids(self, tweet_iterator):
         tweets_id_list = [tweet.id for tweet in tweet_iterator]
@@ -67,9 +72,16 @@ class TwitterCrawler:
         tweet_id_list = self.extract_tweet_ids(likes)
         selected_ids = self.pick_n_random(tweet_id_list)
         msg_body = self.create_html_message_body(selected_ids)
-        html_msg = self.create_html_message(msg_body)
+        html_msg = self.create_html_message("Liked Tweets", msg_body)
         return html_msg
 
+    def get_n_tweets(self):
+        tweets = self.load_tweets()
+        tweet_id_list = self.extract_tweet_ids(tweets)
+        selected_ids = self.pick_n_random(tweet_id_list)
+        msg_body = self.create_html_message_body(selected_ids)
+        html_msg = self.create_html_message("My Tweets", msg_body)
+        return html_msg
 
 
 
