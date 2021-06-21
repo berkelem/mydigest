@@ -2,6 +2,7 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import yagmail
+from datetime import date
 
 
 class DigestEmail:
@@ -55,6 +56,6 @@ class DigestEmail:
     def yag_send(self, message):
         self.yag.send(
             to=self.receiver_email,
-            subject="Daily review",
+            subject="Daily review: {}".format(date.today().isoformat()),
             contents=message
         )
