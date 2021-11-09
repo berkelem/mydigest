@@ -54,7 +54,7 @@ class Goodreads(WebLoader):
         self.browser = self.init_browser()
         self.n = n
         self.soup = None
-        self.other_reviewers = ["1923320-jessica", "19090274-zbigniew-zdziarski", "6100646-brian-clegg"]
+        self.other_reviewers = ["1923320-jessica", "19090274-zbigniew-zdziarski", "6100646-brian-clegg", "922495-patrick"]
 
 
         #
