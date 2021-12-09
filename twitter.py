@@ -3,6 +3,7 @@ import os
 import urllib.request
 import json
 import random
+import time
 
 class TwitterCrawler:
 
@@ -25,7 +26,12 @@ class TwitterCrawler:
         try:
             api.verify_credentials()
         except Exception as e:
-            raise e
+            if "Failed to establish a new connection" in e.reason:
+                time.sleep(60)
+                try:
+                    api.verify_credentials()
+                except Exception:
+                    raise e from None
         return api
 
     @staticmethod
