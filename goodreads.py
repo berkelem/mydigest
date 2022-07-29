@@ -5,6 +5,7 @@ from selenium.common.exceptions import WebDriverException
 import numpy as np
 import random
 import re
+import chromedriver_autoinstaller
 
 
 class WebLoader:
@@ -18,6 +19,7 @@ class WebLoader:
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--incognito')
         options.add_argument('--headless')
+        chromedriver_autoinstaller.install()
         browser = webdriver.Chrome(options=options)
         return browser
 
@@ -54,7 +56,7 @@ class Goodreads(WebLoader):
         self.browser = self.init_browser()
         self.n = n
         self.soup = None
-        self.other_reviewers = ["1923320-jessica", "19090274-zbigniew-zdziarski", "6100646-brian-clegg", "922495-patrick"]
+        self.other_reviewers = ["1923320-jessica", "19090274-zbigniew-zdziarski", "6100646-brian-clegg", "922495-patrick", "1713956-manny-rayner"]
 
 
         #
